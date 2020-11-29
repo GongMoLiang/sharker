@@ -26,5 +26,6 @@ module.exports = {
     // eslint 额外配置的规则
     "rules": {
         "indent": ["error", 4],
+        "no-unused-vars": "warn",
     }
 };
