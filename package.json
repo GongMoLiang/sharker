@@ -11,8 +11,7 @@
   },
   "lint-staged": {
     "web/**/*.{js, jsx}": [
-      "eslint --cache --fix",
-      "git add"
+      "eslint --cache --fix"
     ]
   },
   "keywords": [],
