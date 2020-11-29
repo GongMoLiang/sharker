@@ -1,0 +1,31 @@
+{
+    // 这个是用来转化jsx语法的
+    "presets": [
+        "@babel/preset-react"
+    ],
+    "plugins": [
+        //解决装饰器的
+        [
+            "@babel/plugin-proposal-decorators",
+            {
+                "legacy": true
+            }
+        ],
+        //解决react 事件绑定处理函数箭头函数方式 新语法的
+        [
+            "@babel/plugin-proposal-class-properties",
+            {
+                "loose": true
+            }
+        ],
+        // 解决antd 按需引入 需要安装开发依赖 babel-plugin-import
+        [
+            "import",
+            {
+                "libraryName": "antd",
+                "libraryDirectory": "es",
+                "style": "css" // `style: true` 会加载 less 文件
+            }
+        ]
+    ]
+}

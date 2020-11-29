@@ -1,0 +1,14 @@
+# 针对的格式文件
+[*.{js,jsx}]
+
+# 缩进样式
+indent_style = space 
+
+# 缩进四个字符
+indent_size = 4 
+
+# 删除尾随空格
+trim_trailing_whitespace = true
+
+# 插入最后一行
+insert_final_newline = true

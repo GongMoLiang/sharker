@@ -1,0 +1,23 @@
+/*
+ * 使用频率较高的classNames样式
+ */
+
+.mb15{
+	margin-bottom: 15px;
+}
+
+.mt15{
+	margin-top: 15px;
+}
+
+.ml15{
+	margin-left: 20px;
+}
+
+.mr15{
+    margin-right: 15px;
+}
+
+.ma{
+	margin: 15px 20px;
+}
