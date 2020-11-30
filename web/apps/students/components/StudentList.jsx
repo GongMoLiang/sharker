@@ -93,8 +93,6 @@ export default class StudentAddModal extends Component {
     handleDelteStudent = () => {
         Modal.confirm({
             content: '确人删除此学生信息？',
-            okText: '确认',
-            cancelText: '取消',
             onOk: () => {
                 message.success('删除成功')
             }
@@ -118,7 +116,7 @@ export default class StudentAddModal extends Component {
                     pagination={{
                         size: 'small',
                         showSizeChanger: true,
-                        showTotal: total => `共 ${total} 项`,
+                        showTotal: () => `共 ${total} 项`,
                         pageSize: pageSize,
                         // onChange: (page) => this.handlePaginationChange({ page_index: page }),
                         // onShowSizeChange: (current, size) => this.handlePaginationChange({ page_size: size })

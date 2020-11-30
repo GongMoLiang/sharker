@@ -10,12 +10,15 @@ module.exports = {
         "plugin:react/recommended" // react有关的eslint 规则
     ],
     // 全局变量
-    // "globls": {
-    //     "_": true, // 忽略使用lodash报错
-    // },
+    "globals": {
+        "_": true, // 忽略使用lodash报错
+    },
+    "parser": "babel-eslint",
     "parserOptions": {
         "ecmaFeatures": {
-            "jsx": true
+            "jsx": true,
+            //解决装饰器报错
+            "legacyDecortators": true
         },
         "ecmaVersion": 12,
         "sourceType": "module"
@@ -27,5 +30,6 @@ module.exports = {
     "rules": {
         "indent": ["error", 4],
         "no-unused-vars": "warn",
+        "react/prop-types": "off"
     }
 };

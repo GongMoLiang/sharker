@@ -18,19 +18,27 @@ export default class StudentAddModal extends Component {
 
     render() {
 
-        const { isShowAddStundetModal, onOk, onCancel, onFinsh, fromRef, formFields } = this.props
-        const { id, name } = formFields
-        console.log(formFields, id)
+        const { isShowAddStundetModal, onOk, onCancel, onFinsh, fromRef, isEdit } = this.props
         return (
             <Modal
-                title="新增学生信息"
+                title={isEdit?'编辑学生信息': '新增学生信息'}
                 visible={isShowAddStundetModal}
-                okText="确认"
-                cancelText="取消"
                 onOk={onOk}
                 onCancel={onCancel}
             >
                 <Form  {...formItemLayout} onFinish={onFinsh} ref={fromRef} >
+                    <FormItem
+                        label="学&emsp;&emsp;号"
+                        name="id"
+                        rules={[
+                            {
+                                required: true,
+                                message: '请输入学号'
+                            }
+                        ]}
+                        key="id">
+                        <Input placeholder="请输入学号" disabled={isEdit}/>
+                    </FormItem >
                     <FormItem
                         label="班&emsp;&emsp;级"
                         rules={[
@@ -42,18 +50,6 @@ export default class StudentAddModal extends Component {
                         name="grade"
                         key="grade" >
                         <Input placeholder="请填写班级" />
-                    </FormItem >
-                    <FormItem
-                        label="学&emsp;&emsp;号"
-                        name="id"
-                        rules={[
-                            {
-                                required: true,
-                                message: '请输入学号'
-                            }
-                        ]}
-                        key="id">
-                        <Input placeholder="请输入学号" />
                     </FormItem >
                     <FormItem
                         label="姓&emsp;&emsp;名"
@@ -101,7 +97,7 @@ export default class StudentAddModal extends Component {
                                 message: '请输入家长姓名'
                             }
                         ]}
-                        name="parentsname">
+                        name="parent">
                         <Input placeholder="请输入家长姓名" />
                     </FormItem>
                     <FormItem

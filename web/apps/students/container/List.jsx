@@ -1,7 +1,7 @@
-import React, { Component, Fragment, createRef } from 'react'
+import React, { Component, Fragment } from 'react'
 import ContentContainer from '../../../common/components/ContentContainer'
 import TopbarContainer from '../../../common/components/TopbarContainer'
-import { Button, Row, Col, Modal, message } from 'antd'
+import { Button, Modal, message } from 'antd'
 
 import StudentAddModal from '../components/StudentAddModal'
 import StudentTable from '../components/StudentList'
@@ -16,18 +16,18 @@ export default class StudentList extends Component {
 
     state = {
         isShowAddStundetModal: false,
-        isscrollToFirstError: false,
         isShowFileUploadModal: false,
         isUploading: false,
+        isEdit: false,
         pageIndex: 1,
         pageSize: 5,
         total: 7,
-        formFields: {}
     }
 
     handleAddStudnet = () => {
         this.setState({
-            isShowAddStundetModal: true
+            isShowAddStundetModal: true,
+            isEdit: false
         })
     }
 
@@ -57,19 +57,17 @@ export default class StudentList extends Component {
         const { current: { validateFields, resetFields } } = this.formRef
         validateFields().then((values) => {
             console.log(values)
-            this.setState({
-                isscrollToFirstError: false
-            }, () => {
-                resetFields()
-                message.success('新增成功')
-            })
+
+            resetFields()
+            message.success('新增成功')
+
         }).catch((error) => {
             console.log(error)
         })
     }
 
     handleExportInfo = () => {
-        const contextData = _.reduce(studentList, (result, item, index) => {
+        const contextData = _.reduce(studentList, (result, item) => {
 
             const dataObj = {}
 
@@ -102,15 +100,18 @@ export default class StudentList extends Component {
 
     handleEdit = (values) => {
         this.setState({
-            formFields: values,
-            isShowAddStundetModal: true
+            isShowAddStundetModal: true,
+            isEdit: true
+        },()=>{
+            const { current: { setFieldsValue } } = this.formRef
+            setFieldsValue(values)
         })
     }
 
 
     render() {
 
-        const { isShowAddStundetModal, isShowFileUploadModal, total, pageIndex, pageSize, isUploading, formFields } = this.state
+        const { isShowAddStundetModal, isShowFileUploadModal, total, pageIndex, pageSize, isUploading, isEdit } = this.state
 
         return (
             <Fragment>
@@ -135,7 +136,7 @@ export default class StudentList extends Component {
                     onOk={this.handleAddStudnetOK}
                     onCancel={this.handleAddStudnetCancel}
                     onFinsh={this.handleFinsh}
-                    formFields={formFields}
+                    isEdit={isEdit}
                 />
                 <FileUplodFileUplod
                     isShowFileUploadModal={isShowFileUploadModal}
