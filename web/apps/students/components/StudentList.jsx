@@ -1,8 +1,12 @@
 import React, { Component } from 'react'
 import CopyToClipboard from 'react-copy-to-clipboard'
 import { Table, Card, Row, Col, Modal, message } from 'antd'
+import { connect } from 'react-redux'
 import { EditOutlined, DeleteOutlined, CopyOutlined, EyeOutlined } from '@ant-design/icons'
 
+
+
+@connect(store=>{ return store})
 export default class StudentAddModal extends Component {
 
     columns = [
@@ -103,11 +107,24 @@ export default class StudentAddModal extends Component {
 
     }
 
+    componentDidMount(){
+        setTimeout(() => {
+            console.log(this.props)
+            this.props.dispatch({
+                type: 'CHANGEPAGE',
+                page: 4
+            })
+
+        }, 10*1000);
+
+    }
+
     render() {
 
-        const { dataSource, total, pageSize } = this.props
+        const { dataSource, total, pageSize, current } = this.props
         return (
             <Card>
+                <div>{current}</div>
                 <Table
                     rowKey="id"
                     bordered={true}

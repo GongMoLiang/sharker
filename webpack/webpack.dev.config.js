@@ -11,7 +11,7 @@ module.exports = {
 
     mode: 'development',
 
-    //devtool: 'source-map',
+    devtool: 'source-map',
 
     // 入口
     entry: {
