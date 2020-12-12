@@ -1,17 +1,20 @@
 /*
  * 开发环境 webpack的配置
-*/
+ */
 
+const os = require('os')
 const path = require('path')
 const webpack = require('webpack')
+const Happypack = require('happypack')
 const HtmlWepackPluin = require('html-webpack-plugin')
+const happyThreadPool = Happypack.ThreadPool({ size: os.cpus().length })
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 module.exports = {
 
     mode: 'development',
 
-    devtool: 'source-map',
+    //devtool: 'source-map',
 
     // 入口
     entry: {
@@ -37,9 +40,15 @@ module.exports = {
                 use: ['style-loader', 'css-loader', 'less-loader']
             },
             // jsx  文件规则
+            // {
+            //     test: /\.(js|jsx)$/,
+            //     use: ['babel-loader'],
+            //     exclude: /node_modules/
+            // },
+
             {
                 test: /\.(js|jsx)$/,
-                use: ['babel-loader'],
+                use: ['happypack/loader?id=babel'],
                 exclude: /node_modules/
             },
         ]
@@ -61,6 +70,14 @@ module.exports = {
         }),
 
         new CleanWebpackPlugin(),
+        new Happypack({
+            id: 'babel',
+            use: ['babel-loader'],
+            //共享进程池
+            threadPool: happyThreadPool,
+            //允许 HappyPack 输出日志
+            verbose: true,
+        }),
     ],
     // 开发服务配置
     devServer: {
