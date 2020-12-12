@@ -6,6 +6,7 @@ const path = require('path')
 const HtmlWepackPluin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const CssMinimzerWebpackpluign = require('css-minimizer-webpack-plugin')
 
 module.exports = {
 
@@ -17,7 +18,8 @@ module.exports = {
 
     output: {
         filename: '[name]-[chunkhash].js',
-        path: path.resolve(__dirname, '../dist/web')
+        path: path.resolve(__dirname, '../dist/web'),
+        libraryTarget: 'umd',
     },
 
 
@@ -43,7 +45,7 @@ module.exports = {
             // jsx  文件规则
             {
                 test: /\.(js|jsx)$/,
-                use: ['babel-loader', 'lazyload-loader'],
+                use: ['babel-loader'],
                 exclude: /node_modules/
             },
         ]
@@ -57,8 +59,13 @@ module.exports = {
     // 减小打包体积，使用CDN链接, 可以将对应的包不打包进主入口文件
     externals: {
         "lodash": 'lodash',
-        "React": 'react',
-        "ReactDom": 'react-dom'
+        "react": 'React',
+        "react-dom": {
+            commonjs: "react-dom",
+            commonjs2: 'react-dom',
+            amd: "react-dom",
+            root: "ReactDOM"
+        },
     },
 
     plugins: [
@@ -73,6 +80,22 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: '[name]-[chunkhash].css'
         }),
-    ],
 
+        // 压缩css文件
+        new CssMinimzerWebpackpluign()
+    ],
+    optimization: {
+        // 代码分割
+        splitChunks: {
+            cacheGroups: {
+                // 将第三方模块打开到一起
+                vendor: {
+                    chunks: 'all',
+                    test: /[\\/]node_modules[\\/]/,
+                    name: 'vendor',
+                    priority: 1,
+                },
+            },
+        },
+    }
 }
